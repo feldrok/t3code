@@ -29,10 +29,11 @@
     }
   },
   "scripts": {
-    "typecheck": "tsc --noEmit",
+    "typecheck": "bun check --threads 2 -p tsconfig.json",
     "test": "vp test run --config ../../vite.config.ts --dir .",
     "generate": "node scripts/generate.ts",
-    "probe": "node test/examples/codex-app-server-probe.ts"
+    "probe": "node test/examples/codex-app-server-probe.ts",
+    "typecheck:effect": "tsc --noEmit"
   },
   "dependencies": {
     "effect": "catalog:"

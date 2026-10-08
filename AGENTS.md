@@ -162,3 +162,18 @@ Architecture and its constraints: `docs/internals/overview.md`. Glossary: `docs/
 
 - Don't verify with browsers or computer use unless the user explicitly agrees or requests it.
 - Security is important, but should not be over-indexed on, especially for dev mode/maintainer-only features.
+
+## Type checking
+
+Use Bun 1.4.3 or newer for ordinary TypeScript validation. Keep pnpm/Vite+ for
+dependency installation, runtime, and builds. `pnpm run typecheck:plan` lists
+packages changed since `origin/main` and their consumers without compiling;
+`pnpm run typecheck` checks that selection sequentially. For one package and
+its consumers, use `vp run --filter ...<package-name> typecheck`.
+
+`typecheck:all` is exhaustive for CI or an explicit human check. The patched
+TypeScript checker remains under `typecheck:effect` because Bun does not run
+`@effect/language-service` diagnostics. Run the owning package's
+`typecheck:effect` after Effect changes; CI retains the complete Effect check.
+Marketing retains `astro check` for `.astro` templates. Upgrade an older Bun
+installation with `bun upgrade --canary`; CI installs the checker separately.

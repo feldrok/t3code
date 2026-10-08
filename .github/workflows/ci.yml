@@ -78,8 +78,16 @@ jobs:
       - name: Ensure Electron runtime is installed
         run: vp run --filter @t3tools/desktop ensure:electron
 
+      - name: Setup Bun checker
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: .bun-version
+
       - name: Typecheck
-        run: vpr typecheck
+        run: vp run typecheck:all
+
+      - name: Effect diagnostics
+        run: vp run typecheck:effect
 
   build:
     name: Build
